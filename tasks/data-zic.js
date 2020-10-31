@@ -22,6 +22,11 @@ module.exports = function (grunt) {
 			var file = files.shift(),
 				src = path.resolve('temp/download', version, file);
 
+			if (!grunt.file.exists(src)) {
+				grunt.log.debug('File `' + src + '` doesn\'t exists. Skipping.');
+				return next();
+			}
+
 			exec('zic -d ' + dest + ' ' + src, function (err) {
 				if (err) { throw err; }
 
